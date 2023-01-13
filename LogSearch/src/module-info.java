@@ -7,4 +7,5 @@
  */
 module LogSearch {
 	requires java.desktop;
+	requires json;
 }
