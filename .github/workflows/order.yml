@@ -1,4 +1,4 @@
-name: Log Search CI
+name: Order CI
 
 on:
   push:
