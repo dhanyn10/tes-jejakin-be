@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 
-@Document(collection="jejakin")
+@Document(collection="user")
 public class User {
 	
 	@Id
