@@ -41,7 +41,18 @@ public class UserController {
 		} else {
 			json.put("message", "already logged in");
 		}
-		return json.toString();	
-		
+		return json.toString();		
+	}
+
+	@PostMapping("logout")
+	public String logoutUser(@RequestBody User user, HttpSession session) {
+		JSONObject json = new JSONObject();
+		if(session.getAttribute("username") != null) {
+			session.removeAttribute("username");
+			json.put("message", "logged out");
+		} else {
+			json.put("message", "already logged out");
+		}
+		return json.toString();		
 	}
 }
