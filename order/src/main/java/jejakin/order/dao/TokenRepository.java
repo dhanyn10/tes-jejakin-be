@@ -10,4 +10,6 @@ public interface TokenRepository extends MongoRepository <Token, String> {
 
 	String findByUsername(String tempUser);
 
+	String findByToken(String token);
+
 }
