@@ -6,8 +6,10 @@ import org.springframework.stereotype.Repository;
 import jejakin.order.model.User;
 
 @Repository
-public interface UserRepository extends MongoRepository<User, Integer>{
+public interface UserRepository extends MongoRepository<User, String>{
 
-	String findUserByUsername(String tempUser);
+	String findByUsername(String username);
+
+	String findByEmail(String email);
 
 }
