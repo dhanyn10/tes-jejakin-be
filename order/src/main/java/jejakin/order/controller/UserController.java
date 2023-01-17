@@ -1,13 +1,8 @@
 package jejakin.order.controller;
 
-import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Random;
 
-import javax.servlet.http.HttpSession;
-
-import org.apache.tomcat.util.buf.StringUtils;
-import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +26,17 @@ public class UserController {
 	
 	@PostMapping("adduser")
 	public String saveUser (@RequestBody User user){
-		userRepo.save(user);
-		return "user ditambahkan dengan" + user.getId();
+		JSONObject report = new JSONObject();
+		
+		String dataUser = userRepo.findByUsername(user.getUsername());
+		String dataEmail = userRepo.findByEmail(user.getEmail());
+		if(dataUser != null || dataEmail != null) {
+			report.put("message", "user already exist");
+		} else {
+			report.put("message", "user added");
+			userRepo.save(user);	
+		}
+		return report.toString();
 	}
 	
 	@GetMapping("users")
@@ -60,8 +64,7 @@ public class UserController {
 		JSONObject json = new JSONObject();
 		String tempUser = user.getUsername();
 		
-		String dataUser = userRepo.findUserByUsername(tempUser);
-		JSONObject jsonUser = new JSONObject(dataUser);
+		String dataUser = userRepo.findByUsername(tempUser);
 		if(dataUser == null) {
 			json.put("message", "user not exist");
 		} else {
