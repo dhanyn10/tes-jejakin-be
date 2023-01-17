@@ -1,40 +1,75 @@
 package jejakin.order.controller;
 
 import java.util.List;
-import java.util.Random;
-
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import jejakin.order.dao.TokenRepository;
 import jejakin.order.dao.UserRepository;
-import jejakin.order.model.Token;
 import jejakin.order.model.User;
 
 @RestController
+@RequestMapping("users")
 public class UserController {
 
 	@Autowired
 	private UserRepository userRepo;
-	
 	@Autowired
 	private TokenRepository tokenRepo;
 	
 	@PostMapping("adduser")
-	public String saveUser (@RequestBody User user){
+	public String saveUser (@RequestBody ObjectNode objectNode){
 		JSONObject report = new JSONObject();
+		User saveThis = new User();
+		String jsonToken = objectNode.get("token").asText();
+		saveThis.setUsername(objectNode.get("username").asText());
+		saveThis.setFirstname(objectNode.get("firstname").asText());
+		saveThis.setLastname(objectNode.get("lastname").asText());
+		saveThis.setEmail(objectNode.get("email").asText());
+		saveThis.setRole(objectNode.get("role").asText());
 		
-		String dataUser = userRepo.findByUsername(user.getUsername());
-		String dataEmail = userRepo.findByEmail(user.getEmail());
-		if(dataUser != null || dataEmail != null) {
+		// token untuk memastikan user mana yang menambahkan user baru
+		String dataToken = tokenRepo.findByToken(jsonToken);
+		if(dataToken == null) {
+			report.put("message", "token invalid");
+			return report.toString();
+		}
+		
+		// konversi ke jsonobject
+		JSONObject mytoken = new JSONObject(dataToken);
+		// ambil data username dari json
+		String username = mytoken.getString("username");
+		
+		// validasi role user dengan mengambil data dari collection: user
+		String dataUser = userRepo.findByUsername(username);
+		// pastikan data user masih ada sesuai dengan token
+		if(dataUser == null) {
+			report.put("message", "user with token: "+ dataToken+ "not found");
+			return report.toString();
+		}
+		// data token terbukti masih sesuai, konversi ke jsonobject
+		JSONObject myUser = new JSONObject(dataUser);
+		String getRole = myUser.getString("role");
+		if(!"admin".equals(getRole)) {
+			report.put("message", "role not valid");
+			return report.toString();
+		}
+		
+		// cek user yang akan ditambahkan
+		String tmpUser = userRepo.findByUsername(saveThis.getUsername());
+		String tmpEmail = userRepo.findByEmail(saveThis.getEmail());
+		if(tmpUser != null || tmpEmail != null) {
 			report.put("message", "user already exist");
 		} else {
 			report.put("message", "user added");
-			userRepo.save(user);	
+			userRepo.save(saveThis);	
 		}
 		return report.toString();
 	}
@@ -42,65 +77,5 @@ public class UserController {
 	@GetMapping("users")
 	public List<User> getUser() {
 		return userRepo.findAll();
-	}
-	
-	public static String GenerateToken(int targetStringLength) {
-	    int leftLimit = 97; // letter 'a'
-	    int rightLimit = 122; // letter 'z'
-	    Random random = new Random();
-	    StringBuilder buffer = new StringBuilder(targetStringLength);
-	    for (int i = 0; i < targetStringLength; i++) {
-	        int randomLimitedInt = leftLimit + (int) 
-	          (random.nextFloat() * (rightLimit - leftLimit + 1));
-	        buffer.append((char) randomLimitedInt);
-	    }
-	    String generatedString = buffer.toString();
-
-	    return generatedString;
-	}
-	
-	@PostMapping("login")
-	public String loginUser(@RequestBody User user) {
-		JSONObject json = new JSONObject();
-		String tempUser = user.getUsername();
-		
-		String dataUser = userRepo.findByUsername(tempUser);
-		if(dataUser == null) {
-			json.put("message", "user not exist");
-		} else {
-			// cek user apakah sudah memiliki token
-			String dataToken = tokenRepo.findByUsername(tempUser);
-			if(dataToken != null) { // jika data token sudah ada
-				JSONObject jsonToken = new JSONObject(dataToken);
-				String token = jsonToken.getString("token");
-				json.put("username", tempUser);
-				json.put("token", token);
-			} else { // jika data token belum ada
-				String tempToken = GenerateToken(10);
-				Token token = new Token();
-				token.setUsername(tempUser);
-				token.setToken(tempToken);
-				tokenRepo.save(token);
-				json.put("username", tempUser);
-				json.put("token", tempToken);
-			}
-		}
-		return json.toString();
-	}
-
-	@PostMapping("logout")
-	public String logoutUser(@RequestBody Token token) {
-		JSONObject json = new JSONObject();
-		String userToken = token.getUsername();
-		String dataUser = tokenRepo.findByUsername(userToken);
-		if(dataUser != null) {
-			JSONObject tmpToken = new JSONObject(dataUser);
-			String usertoken = tmpToken.getString("_id");
-			tokenRepo.deleteById(usertoken);
-			json.put("message", "delete token success");
-		} else {
-			json.put("message", "token not found");
-		}
-		return json.toString();
 	}
 }
