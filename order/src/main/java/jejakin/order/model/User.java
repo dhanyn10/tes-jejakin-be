@@ -1,10 +1,8 @@
 package jejakin.order.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,8 +13,7 @@ import lombok.Setter;
 @Document(collection="user")
 public class User {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@MongoId(FieldType.STRING)
 	private String id;
 	private String username;
 	private String firstname;
