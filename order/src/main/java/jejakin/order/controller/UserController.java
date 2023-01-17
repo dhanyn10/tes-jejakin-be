@@ -34,13 +34,20 @@ public class UserController {
 	@PostMapping("login")
 	public String loginUser(@RequestBody User user, HttpSession session) {
 		JSONObject json = new JSONObject();
-		if(session.getAttribute("username") == null) {
-			session.setAttribute("username", user.getUsername());
-			json.put("message", "logged in");
+		String tempUser = user.getUsername();
+		
+		String dataUser = userRepo.findUserByUsername(tempUser);
+		if(dataUser == null) {
+			json.put("message", "user not exist");
 		} else {
-			json.put("message", "already logged in");
+			if(session.getAttribute("username") == null) {
+				session.setAttribute("username", user.getUsername());
+				json.put("message", "logged in");
+			} else {
+				json.put("message", "already logged in");
+			}
 		}
-		return json.toString();		
+		return json.toString();
 	}
 
 	@PostMapping("logout")
