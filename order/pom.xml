@@ -53,6 +53,11 @@
 		    <artifactId>json</artifactId>
 		    <version>20220924</version>
 		</dependency>
+		<dependency>
+		    <groupId>net.datafaker</groupId>
+		    <artifactId>datafaker</artifactId>
+		    <version>1.7.0</version>
+		</dependency>
 
 	</dependencies>
 
