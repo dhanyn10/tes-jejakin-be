@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -97,5 +98,19 @@ public class OrderController {
 	public List<Order> myOrder (@PathVariable(value="id")String id) {
 		List<Order> order = orderRepo.findAllByUserId(id);
 		return order;
+	}
+	
+	@DeleteMapping("{id}")
+	public String deleteOrder (@PathVariable(value="id")String id) {
+		JSONObject report = new JSONObject();
+		Optional<Order> orderId = orderRepo.findById(id);
+		if(orderId.isPresent()) {
+			report.put("message", "success delete order");
+			report.put("deletedOrder", id);
+			orderRepo.deleteById(id);
+		} else {
+			report.put("message", "order not found");
+		}
+		return report.toString();
 	}
 }
