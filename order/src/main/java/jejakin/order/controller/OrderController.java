@@ -1,9 +1,12 @@
 package jejakin.order.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,5 +91,11 @@ public class OrderController {
 		orderRepo.save(order);
 		report.put("message", "order created");
 		return report.toString();
+	}
+	
+	@GetMapping("{id}")
+	public List<Order> myOrder (@PathVariable(value="id")String id) {
+		List<Order> order = orderRepo.findAllByUserId(id);
+		return order;
 	}
 }
