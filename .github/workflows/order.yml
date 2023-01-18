@@ -10,6 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: build
+    - uses: actions/checkout@v2
+    - name: run docker compose
       working-directory: ./order
       run: docker-compose up -d
