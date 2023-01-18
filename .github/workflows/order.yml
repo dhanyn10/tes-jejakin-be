@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-        
+    steps:
     - name: build
       working-directory: ./order
       run: docker-compose up -d
