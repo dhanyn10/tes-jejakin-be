@@ -1,9 +1,11 @@
 package jejakin.order.controller;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,5 +34,10 @@ public class ProductController {
 		}
 		report.put("message", "success generate data product");
 		return report.toString();
+	}
+	
+	@GetMapping("all")
+	public List<Product> getProduct() {
+		return productRepo.findAll();
 	}
 }
