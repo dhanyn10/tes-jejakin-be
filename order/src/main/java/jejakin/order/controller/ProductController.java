@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +21,7 @@ public class ProductController {
 	@Autowired
 	private ProductRepository productRepo;
 	
-	@PostMapping("generate/{value}")
+	@GetMapping("generate/{value}")
 	public String generateProduct(@PathVariable(value="value")int value) {
 		Faker faker = new Faker(new Locale("en-US"));
 		JSONObject report = new JSONObject();
