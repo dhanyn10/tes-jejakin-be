@@ -74,7 +74,7 @@ public class UserController {
 		return report.toString();
 	}
 	
-	@GetMapping("users")
+	@GetMapping("all")
 	public List<User> getUser() {
 		return userRepo.findAll();
 	}
