@@ -24,6 +24,25 @@ public class UserController {
 	@Autowired
 	private TokenRepository tokenRepo;
 	
+	@GetMapping("admin")
+	public String getAdmin () {
+		JSONObject report = new JSONObject();
+		String dataAdmin = userRepo.findByUsername("admin");
+		if(dataAdmin == null) {
+			User myadmin = new User();
+			myadmin.setUsername("admin");
+			myadmin.setFirstname("admin");
+			myadmin.setLastname("admin");
+			myadmin.setFirstname("admin@admin");
+			myadmin.setRole("admin");
+			userRepo.save(myadmin);
+			report.put("message", "admin generated");
+		} else {
+			report.put("message", "admin only generated once");
+		}
+		return report.toString();
+	}
+	
 	@PostMapping("adduser")
 	public String saveUser (@RequestBody ObjectNode objectNode){
 		JSONObject report = new JSONObject();
