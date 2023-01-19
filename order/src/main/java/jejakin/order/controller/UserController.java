@@ -43,7 +43,7 @@ public class UserController {
 		return report.toString();
 	}
 	
-	@PostMapping("adduser")
+	@PostMapping("add")
 	public String saveUser (@RequestBody ObjectNode objectNode){
 		JSONObject report = new JSONObject();
 		User saveThis = new User();

@@ -44,6 +44,40 @@
 ##### Dengan Docker
 1. pastikan docker desktop sudah terinstall dan running, dan docker compose sudah diinstall di sistem
 2. jalankan program dengan command
-```sh
-docker-compose up -d
-```
+    ```sh
+    docker-compose up -d
+    ```
+### Petunjuk penggunaan Rest API
+dibutuhkan postman saat menggunakan Rest API
+- generate admin => `GET` pada alamat `localhost:8080/users/admin` untuk melakukan auto negerate user admin dengan role admin. Hanya user dengan __role__ admin yang bisa memembuat user baru dengan role admin atau user biasa.
+- menayangkan semua user => `GET` pada alamat `localhost:8080/users/all`
+- login => `POST` pada alamat `localhost:8080/login`, lalu pilih `Body > raw > JSON` dan masukkan
+    ```json
+    {
+        "username": "admin"
+    }
+    ```
+    agar user dengan username `admin` bisa login. Login ditandai dengan token untuk menggantikan session. Jika login berhasil, maka akan muncul response
+    ```json
+    {
+        "username": "admin",
+        "token": "lcdmygocqj"
+    }
+    ```
+- menambahkan user => `POST` pada alamat `localhost:8080/users/add`, lalu pilih `Body > raw > JSON` dan masukkan
+    ```json
+    {
+        "token": "lcdmygocqj",
+        "username": "johnSmith",
+        "firstname": "john",
+        "lastname": "smith",
+        "email": "johnSS@gmail.com",
+        "role": "user"
+    }
+    ```
+    jika berhasil, maka akan muncul reponse
+    ```json
+    {
+        "message": "user added"
+    }
+    ```
