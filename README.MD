@@ -58,7 +58,7 @@ dibutuhkan postman saat menggunakan Rest API
         "username": "admin"
     }
     ```
-    agar user dengan username `admin` bisa login. Login ditandai dengan token untuk menggantikan session. Jika login berhasil, maka akan muncul response
+    agar user dengan username `admin` bisa login. Login ditandai dengan token(tidak menggunakan session). Jika login berhasil, maka akan muncul response
     ```json
     {
         "username": "admin",
@@ -90,3 +90,29 @@ dibutuhkan postman saat menggunakan Rest API
     }
     ```
 - menayangkan seluruh product => `GET` pada alamat `localhost:8080/products/all`, akan menampilkan seluruh product.
+#### Order
+- harus [login](#users) terlebih dulu dan mendapatkan token sebelum bisa membuat order
+- untuk membuat order, `POST` pada alamat `localhost:8080/orders/add`, lalu pilih `Body > raw > JSON` dan masukkan
+    ```json
+    {
+        "token": "lcdmygocqj",
+        "userId": "63c8d7222b2eac2ed0d73aac",
+        "productId": "63c8e3e32b2eac2ed0d73ab0",
+        "amount": 5,
+        "status": "pending"
+    }
+    ```
+    jika berhasil, akan muncul response
+    ```json
+    {
+        "message": "order created"
+    }
+    ```
+- untuk melihat list order dari user, gunakan `GET` pada alamat `localhost:8080/orders/63c8d7222b2eac2ed0d73aac` dengan `63c8d7222b2eac2ed0d73aac` adalah `id` dari user yang membuat order.
+- untuk menghapus order, gunakan `DELETE` pada alamat `localhost:8080/orders/63c8e78b2b2eac2ed0d73ac8` dengan `63c8e78b2b2eac2ed0d73ac8` adalah `id` dari order yang dibuat. Jika berhasil, maka akan muncul response
+    ```json
+    {
+        "message": "success delete order",
+        "deletedOrder": "63c8e78b2b2eac2ed0d73ac8"
+    }
+    ```
