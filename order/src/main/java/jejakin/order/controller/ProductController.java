@@ -15,7 +15,7 @@ import jejakin.order.model.Product;
 import net.datafaker.Faker;
 
 @RestController
-@RequestMapping("product")
+@RequestMapping("products")
 public class ProductController {
 
 	@Autowired
