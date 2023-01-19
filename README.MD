@@ -49,7 +49,8 @@
     ```
 ### Petunjuk penggunaan Rest API
 dibutuhkan postman saat menggunakan Rest API
-- generate admin => `GET` pada alamat `localhost:8080/users/admin` untuk melakukan auto negerate user admin dengan role admin. Hanya user dengan __role__ admin yang bisa memembuat user baru dengan role admin atau user biasa.
+#### Users
+- generate admin => `GET` pada alamat `localhost:8080/users/admin` untuk melakukan auto negerate user admin dengan role admin. Hanya user dengan **role admin** yang bisa memembuat user baru dengan role admin atau user biasa.
 - menayangkan semua user => `GET` pada alamat `localhost:8080/users/all`
 - login => `POST` pada alamat `localhost:8080/login`, lalu pilih `Body > raw > JSON` dan masukkan
     ```json
@@ -64,7 +65,7 @@ dibutuhkan postman saat menggunakan Rest API
         "token": "lcdmygocqj"
     }
     ```
-- menambahkan user => `POST` pada alamat `localhost:8080/users/add`, lalu pilih `Body > raw > JSON` dan masukkan
+- menambahkan user => `POST` pada alamat `localhost:8080/users/add`, gunakan token yang muncul setelah berhasil login agar bisa menambahkan user baru. lalu pilih `Body > raw > JSON` dan masukkan
     ```json
     {
         "token": "lcdmygocqj",
@@ -81,3 +82,11 @@ dibutuhkan postman saat menggunakan Rest API
         "message": "user added"
     }
     ```
+#### Product
+- generate product => `GET` pada alamat `localhost:8080/products/generate/20`, ini akan melakukan auto generate project sesuai jumlah yang diinginkan yaitu `20` product, product yang digenerate adalah hasil dari program faker data. Jika berhasil, maka akan muncul response berikut:
+    ```json
+    {
+        "message": "success generate data product"
+    }
+    ```
+- menayangkan seluruh product => `GET` pada alamat `localhost:8080/products/all`, akan menampilkan seluruh product.
