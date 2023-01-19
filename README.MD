@@ -75,7 +75,7 @@ dibutuhkan postman saat menggunakan Rest API
         "role": "user"
     }
     ```
-    jika berhasil, maka akan muncul reponse
+    jika berhasil, maka akan muncul response
     ```json
     {
         "message": "user added"
