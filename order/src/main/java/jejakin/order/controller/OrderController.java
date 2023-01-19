@@ -24,7 +24,7 @@ import jejakin.order.model.Product;
 import jejakin.order.model.User;
 
 @RestController
-@RequestMapping("order")
+@RequestMapping("orders")
 public class OrderController {
 
 	@Autowired
