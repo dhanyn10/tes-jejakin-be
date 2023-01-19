@@ -1,5 +1,6 @@
 # Jejakin
-
+[![Log Search CI](https://github.com/dhanyn10/tes-jejakin-be/actions/workflows/log-search.yml/badge.svg)](https://github.com/dhanyn10/tes-jejakin-be/actions/workflows/log-search.yml)
+[![Order CI](https://github.com/dhanyn10/tes-jejakin-be/actions/workflows/order.yml/badge.svg)](https://github.com/dhanyn10/tes-jejakin-be/actions/workflows/order.yml)
 ## Spesifikasi
 - Maven
     ```sh
