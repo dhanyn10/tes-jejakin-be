@@ -33,7 +33,7 @@ public class UserController {
 			myadmin.setUsername("admin");
 			myadmin.setFirstname("admin");
 			myadmin.setLastname("admin");
-			myadmin.setFirstname("admin@admin");
+			myadmin.setEmail("admin@admin");
 			myadmin.setRole("admin");
 			userRepo.save(myadmin);
 			report.put("message", "admin generated");
