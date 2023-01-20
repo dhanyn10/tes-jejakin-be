@@ -10,6 +10,9 @@ on:
 
 jobs:
   build:
+    defaults:
+      run:
+        working-directory: ./order
     services:
       mongodb:
         image: mongo
@@ -34,8 +37,6 @@ jobs:
         property: 'spring.data.mongodb.host'
         value: 'localhost'
     - name: build
-      working-directory: ./order
       run: mvn clean package
     - name: run
-      working-directory: ./order
       run: java -jar target/order-1.0.0.jar
