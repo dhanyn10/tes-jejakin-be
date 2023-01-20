@@ -7,10 +7,14 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  run-apps:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./order
     steps:
     - uses: actions/checkout@v2
     - name: run docker compose
-      working-directory: ./order
       run: docker-compose up -d
+    - name: run test
+      run: docker exec order mvn test
