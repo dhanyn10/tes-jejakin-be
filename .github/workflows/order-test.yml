@@ -32,10 +32,9 @@ jobs:
     - name: checkdir
       run: ls
     - name: Write value to Properties-file
-      working-directory: ./order
       uses: christian-draeger/write-properties@1.1.0
       with:
-        path: './src/main/resources/application.properties'
+        path: './order/src/main/resources/application.properties'
         property: 'spring.data.mongodb.host'
         value: 'localhost'
     - name: build
