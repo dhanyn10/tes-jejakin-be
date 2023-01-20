@@ -8,7 +8,8 @@ on:
 
 jobs:
   defaults:
-    working-directory: ./order
+    run:
+      working-directory: ./order
   run-apps:
     runs-on: ubuntu-latest
     steps:
