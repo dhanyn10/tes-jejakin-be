@@ -32,7 +32,7 @@ jobs:
       with:
         path: './src/main/resources/application.properties'
         property: 'spring.data.mongodb.host'
-    value: 'localhost'
+        value: 'localhost'
     - name: build
       working-directory: ./order
       run: mvn clean package
