@@ -33,6 +33,7 @@ jobs:
       run: ls
     - name: Write value to Properties-file
       uses: christian-draeger/write-properties@1.1.0
+      working-directory: ./order
       with:
         path: './src/main/resources/application.properties'
         property: 'spring.data.mongodb.host'
