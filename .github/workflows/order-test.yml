@@ -9,10 +9,10 @@ on:
     branches: [ "main" ]
 
 jobs:
+  defaults:
+    run:
+      working-directory: ./order
   build:
-    defaults:
-      run:
-        working-directory: ./order
     services:
       mongodb:
         image: mongo
