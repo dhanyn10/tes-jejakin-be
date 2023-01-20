@@ -8,10 +8,10 @@ on:
   pull_request:
     branches: [ "main" ]
 
+defaults:
+  run:
+    working-directory: ./order
 jobs:
-  defaults:
-    run:
-      working-directory: ./order
   build:
     services:
       mongodb:
