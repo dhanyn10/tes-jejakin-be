@@ -7,11 +7,11 @@ on:
     branches: [ "main" ]
 
 jobs:
-  defaults:
-    run:
-      working-directory: ./order
   run-apps:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./order
     steps:
     - uses: actions/checkout@v2
     - name: run docker compose
