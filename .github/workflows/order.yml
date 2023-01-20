@@ -6,17 +6,19 @@ on:
   pull_request:
     branches: [ "main" ]
 
+defaults:
+  run:
+    working-directory: ./order
 jobs:
   run-apps:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: run docker compose
-      working-directory: ./order
       run: docker-compose up -d
   tests-apps:
     needs: run-apps
     runs-on: ubuntu-latest
     steps:
     - name: run test
-      run: mvn test
+      run: docker exec order mvn test
