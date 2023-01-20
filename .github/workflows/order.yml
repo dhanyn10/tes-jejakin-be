@@ -19,5 +19,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: run test
-      working-directory: ./order
       run: docker exec order mvn test
