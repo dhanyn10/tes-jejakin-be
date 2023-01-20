@@ -3,6 +3,7 @@ package jejakin.order.controller;
 import java.util.List;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,10 +22,11 @@ public class UserController {
 
 	@Autowired
 	private UserRepository userRepo;
+	
 	@Autowired
 	private TokenRepository tokenRepo;
 	
-	@GetMapping("admin")
+	@GetMapping(value = "admin", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String getAdmin () {
 		JSONObject report = new JSONObject();
 		String dataAdmin = userRepo.findByUsername("admin");
@@ -43,7 +45,7 @@ public class UserController {
 		return report.toString();
 	}
 	
-	@PostMapping("add")
+	@PostMapping(value = "add", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String saveUser (@RequestBody ObjectNode objectNode){
 		JSONObject report = new JSONObject();
 		User saveThis = new User();
@@ -93,7 +95,7 @@ public class UserController {
 		return report.toString();
 	}
 	
-	@GetMapping("all")
+	@GetMapping(value = "all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<User> getUser() {
 		return userRepo.findAll();
 	}

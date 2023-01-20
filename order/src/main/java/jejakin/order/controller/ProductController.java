@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ public class ProductController {
 	@Autowired
 	private ProductRepository productRepo;
 	
-	@GetMapping("generate/{value}")
+	@GetMapping(value = "generate/{value}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String generateProduct(@PathVariable(value="value")int value) {
 		Faker faker = new Faker(new Locale("en-US"));
 		JSONObject report = new JSONObject();
@@ -35,7 +36,7 @@ public class ProductController {
 		return report.toString();
 	}
 	
-	@GetMapping("all")
+	@GetMapping(value = "all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Product> getProduct() {
 		return productRepo.findAll();
 	}

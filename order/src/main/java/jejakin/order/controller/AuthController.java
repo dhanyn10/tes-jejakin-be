@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +38,7 @@ public class AuthController {
 	    return generatedString;
 	}
 	
-	@PostMapping("login")
+	@PostMapping(value = "login", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String loginUser(@RequestBody User user) {
 		JSONObject json = new JSONObject();
 		String tempUser = user.getUsername();
@@ -66,7 +67,7 @@ public class AuthController {
 		return json.toString();
 	}
 
-	@PostMapping("logout")
+	@PostMapping(value = "logout", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String logoutUser(@RequestBody Token token) {
 		JSONObject json = new JSONObject();
 		String userToken = token.getUsername();
