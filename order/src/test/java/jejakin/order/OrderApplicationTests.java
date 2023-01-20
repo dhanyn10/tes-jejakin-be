@@ -17,7 +17,7 @@ class OrderApplicationTests {
 
 	@Test
 	void contextLoads() throws IOException {
-		HttpUriRequest request = new HttpGet("http://localhost:8080/users/all");
+		HttpUriRequest request = new HttpGet("http://web:8080/users/all");
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 		assertEquals(httpResponse.getCode(), HttpStatus.SC_OK);
 	}
