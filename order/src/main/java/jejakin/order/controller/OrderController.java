@@ -1,5 +1,6 @@
 package jejakin.order.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -96,9 +97,23 @@ public class OrderController {
 	}
 	
 	@GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Order> myOrder (@PathVariable(value="id")String id) {
+	public String myOrder (@PathVariable(value="id")String id) {
 		List<Order> order = orderRepo.findAllByUserId(id);
-		return order;
+		ArrayList<JSONObject> arr = new ArrayList<JSONObject>();
+		for(int i = 0; i < order.size(); i++) {
+			String productId = order.get(i).getProductId();
+			Optional<Product> productData = productRepo.findById(productId);
+			String productName = productData.get().getName().toString();
+			JSONObject myorder = new JSONObject();
+			myorder.put("id", order.get(i).getId());
+			myorder.put("userId", order.get(i).getUserId());
+			myorder.put("productId", order.get(i).getProductId());
+			myorder.put("productName", productName);
+			myorder.put("amount", order.get(i).getAmount());
+			myorder.put("status", order.get(i).getStatus());
+			arr.add(myorder);
+		}
+		return arr.toString();
 	}
 	
 	@DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
