@@ -16,5 +16,5 @@ jobs:
     - uses: actions/checkout@v2
     - name: run docker compose
       run: docker-compose up -d
-    - name: run test
+    - name: build
       run: docker exec order mvn clean package
