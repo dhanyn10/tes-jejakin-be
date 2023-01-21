@@ -13,5 +13,6 @@ services:
   db:
     container_name: database
     image: mongo
+    restart: unless-stopped
     environment:
       MONGO_INITDB_DATABASE: jejakin
