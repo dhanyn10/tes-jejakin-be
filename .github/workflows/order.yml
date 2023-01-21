@@ -17,4 +17,4 @@ jobs:
     - name: run docker compose
       run: docker-compose up -d
     - name: run test
-      run: docker exec order mvn test
+      run: docker exec order mvn clean package
