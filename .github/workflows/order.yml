@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  Build Inside Docker:
+  build-docker:
     runs-on: ubuntu-latest
     defaults:
       run:
