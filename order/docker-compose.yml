@@ -13,6 +13,6 @@ services:
   db:
     container_name: database
     image: mongo
-    restart: unless-stopped
+    restart: no
     environment:
       MONGO_INITDB_DATABASE: jejakin
