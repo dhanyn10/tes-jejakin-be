@@ -42,7 +42,7 @@ class OrderApplicationUsersTests {
 	
 	private UserRepository userRepo;
 	
-	private String uriContainer = mongoDBContainer.getHost();
+	private String uriContainer = mongoDBContainer.getTestHostIpAddress();
 	
 	@Test
 	@DisplayName("tambah admin")
