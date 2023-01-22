@@ -14,9 +14,7 @@ jobs:
         working-directory: ./order
     steps:
     - name: create docker group
-      run: |
-        sudo gpasswd -a $USER docker
-        sudo service docker restart
+      run: sudo gpasswd -a $USER docker
     - uses: actions/checkout@v2
     - name: run docker compose
       run: docker-compose up -d
