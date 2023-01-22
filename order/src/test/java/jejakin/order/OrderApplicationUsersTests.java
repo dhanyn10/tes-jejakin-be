@@ -41,7 +41,7 @@ class OrderApplicationUsersTests {
 	private String alamatHost;
 	
 	@Container
-	static MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:latest"));
+	static MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:6.0.3"));
 
 	@DynamicPropertySource
 	static void setProperties(DynamicPropertyRegistry registry) {
@@ -51,7 +51,6 @@ class OrderApplicationUsersTests {
 	@Test
 	@DisplayName("tambah admin")
 	void isertAdmin() throws IOException {
-		mongoDBContainer.start();
 		userRepo.deleteAll();
 		URL url = new URL("http://"+ alamatHost +":8080/users/admin");
 		URLConnection conn = url.openConnection();
@@ -65,7 +64,6 @@ class OrderApplicationUsersTests {
 	@Test
 	@DisplayName("tambah admin gagal")
 	void isertAdminTwice() throws IOException {
-		mongoDBContainer.start();
 		URL url = new URL("http://"+ alamatHost +":8080/users/admin");
 		URLConnection conn = url.openConnection();
 		InputStream in = conn.getInputStream();
@@ -78,7 +76,6 @@ class OrderApplicationUsersTests {
 	@Test
 	@DisplayName("tambah user biasa")
 	void AddRegularkUsers() throws IOException, JSONException {
-		mongoDBContainer.start();
 		User reguler = new User();
 		Faker faker = new Faker();
 		reguler.setUsername(faker.football().teams());
