@@ -13,12 +13,12 @@ jobs:
       run:
         working-directory: ./order
     steps:
-    - uses: actions/checkout@v2
-    - name: run docker compose
-      run: docker-compose up -d
     - name: create docker group
       run: |
         sudo gpasswd -a $USER docker
         sudo service docker restart
+    - uses: actions/checkout@v2
+    - name: run docker compose
+      run: docker-compose up -d
     - name: build
       run: docker exec order mvn clean package
