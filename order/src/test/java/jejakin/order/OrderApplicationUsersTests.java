@@ -41,7 +41,7 @@ class OrderApplicationUsersTests {
 	private String alamatHost;
 	
 	@Container
-	static MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:6.0.3"));
+	static MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:latest"));
 
 	@DynamicPropertySource
 	static void setProperties(DynamicPropertyRegistry registry) {

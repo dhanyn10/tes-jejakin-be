@@ -12,7 +12,7 @@ services:
      - 8080:8080
   db:
     container_name: database
-    image: mongo:603
+    image: mongo:latest
     restart: unless-stopped
     environment:
       MONGO_INITDB_DATABASE: jejakin
