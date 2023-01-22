@@ -12,8 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,12 +32,6 @@ import net.datafaker.Faker;
 @DataMongoTest(excludeAutoConfiguration = EmbeddedMongoAutoConfiguration.class)
 class OrderApplicationUsersTests {
 	
-	@Autowired
-	private UserRepository userRepo;
-	
-	@Value("${webhost}") // ambil data webhost dari application.properties
-	private String alamatHost;
-	
 	@Container
 	static MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:6.0.3"));
 
@@ -48,11 +40,15 @@ class OrderApplicationUsersTests {
 		registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
 	}
 	
+	private UserRepository userRepo;
+	
+	private String uriContainer = mongoDBContainer.getHost();
+	
 	@Test
 	@DisplayName("tambah admin")
 	void isertAdmin() throws IOException {
 		userRepo.deleteAll();
-		URL url = new URL("http://"+ alamatHost +":8080/users/admin");
+		URL url = new URL(uriContainer + "/users/admin");
 		URLConnection conn = url.openConnection();
 		InputStream in = conn.getInputStream();
 		String encoding = conn.getContentEncoding();
@@ -64,7 +60,7 @@ class OrderApplicationUsersTests {
 	@Test
 	@DisplayName("tambah admin gagal")
 	void isertAdminTwice() throws IOException {
-		URL url = new URL("http://"+ alamatHost +":8080/users/admin");
+		URL url = new URL(uriContainer + "/users/admin");
 		URLConnection conn = url.openConnection();
 		InputStream in = conn.getInputStream();
 		String encoding = conn.getContentEncoding();
@@ -84,7 +80,7 @@ class OrderApplicationUsersTests {
 		reguler.setRole("user");
 		reguler.setEmail(faker.football().coaches());
 		userRepo.save(reguler);
-		URL url = new URL("http://"+ alamatHost +":8080/users/all");
+		URL url = new URL(uriContainer + "/users/all");
 		URLConnection conn = url.openConnection();
 		InputStream in = conn.getInputStream();
 		String encoding = conn.getContentEncoding();
