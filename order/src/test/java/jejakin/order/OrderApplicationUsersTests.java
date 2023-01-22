@@ -15,6 +15,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.utility.DockerImageName;
+
 import jejakin.order.dao.UserRepository;
 import jejakin.order.model.User;
 import net.datafaker.Faker;
@@ -28,6 +31,8 @@ class OrderApplicationUsersTests {
 	
 	@Value("${webhost}") // ambil data webhost dari application.properties
 	private String alamatHost;
+	
+	final MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:4.0.10"));
 	
 	@Test
 	@DisplayName("tambah admin")
