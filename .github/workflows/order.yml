@@ -10,12 +10,12 @@ jobs:
   run-apps:
     runs-on: ubuntu-latest
     services:
-    mongo:
-      image: mongo
-      env:
-        MONGO_INITDB_DATABASE: jejakin
-      ports:
-        - 27017:27017
+      mongo:
+        image: mongo
+        env:
+          MONGO_INITDB_DATABASE: jejakin
+        ports:
+          - 27017:27017
     defaults:
       run:
         working-directory: ./order
