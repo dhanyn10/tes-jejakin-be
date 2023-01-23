@@ -19,6 +19,7 @@ import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.testcontainers.shaded.org.apache.commons.io.IOUtils;
@@ -26,7 +27,7 @@ import org.testcontainers.shaded.org.apache.commons.io.IOUtils;
 import jejakin.order.dao.UserRepository;
 
 @SpringBootTest
-@DataMongoTest
+@DataMongoTest(excludeAutoConfiguration = EmbeddedMongoAutoConfiguration.class)
 class OrderApplicationTests {
 	
 	@Autowired
