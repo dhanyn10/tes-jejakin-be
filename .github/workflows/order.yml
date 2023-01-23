@@ -21,6 +21,8 @@ jobs:
         working-directory: ./order
     steps:
     - uses: actions/checkout@v2
+    - name: test mongodb
+      run: systemctl start mongod
     - name: run docker compose
       run: docker-compose up -d
     - name: build
