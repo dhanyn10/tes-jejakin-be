@@ -15,6 +15,8 @@ import org.apache.hc.client5.http.classic.methods.HttpUriRequest;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.http.HttpResponse;
 import org.apache.hc.core5.http.HttpStatus;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +25,8 @@ import org.testcontainers.shaded.org.hamcrest.CoreMatchers;
 import org.testcontainers.shaded.org.hamcrest.MatcherAssert;
 
 import jejakin.order.dao.UserRepository;
+import jejakin.order.model.User;
+import net.datafaker.Faker;
 
 @SpringBootTest
 class OrderApplicationTests {
@@ -74,5 +78,24 @@ class OrderApplicationTests {
 		encoding = encoding == null ? "UTF-8" : encoding;
 		String body = IOUtils.toString(in, encoding);
 		MatcherAssert.assertThat(body, CoreMatchers.containsString("admin only generated once"));
+	}
+	@Test
+	void AddRegularkUsers() throws IOException, JSONException {
+		User reguler = new User();
+		Faker faker = new Faker();
+		reguler.setUsername(faker.football().teams());
+		reguler.setFirstname(faker.football().players());
+		reguler.setLastname(faker.football().positions());
+		reguler.setRole("user");
+		reguler.setEmail(faker.football().coaches());
+		userRepo.save(reguler);
+		URL url = new URL(this.configHost() + "/users/all");
+		URLConnection conn = url.openConnection();
+		InputStream in = conn.getInputStream();
+		String encoding = conn.getContentEncoding();
+		encoding = encoding == null ? "UTF-8" : encoding;
+		String body = IOUtils.toString(in, encoding);
+		JSONArray resBody = new JSONArray(body);
+		assertEquals(resBody.length(), 2); // ada 2 user, admin dan reguler
 	}
 }
