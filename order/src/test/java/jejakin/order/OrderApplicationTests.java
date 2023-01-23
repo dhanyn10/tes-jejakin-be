@@ -12,9 +12,7 @@ import org.apache.hc.client5.http.classic.methods.HttpUriRequest;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.http.HttpResponse;
 import org.apache.hc.core5.http.HttpStatus;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -38,7 +36,7 @@ class OrderApplicationTests {
 	}
 	
 	@Test
-	void contextLoads() throws IOException {
+	void getAllUsers() throws IOException {
 		HttpUriRequest request = new HttpGet(this.configHost() + "/users/all");
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 		assertEquals(httpResponse.getCode(), HttpStatus.SC_OK);
