@@ -10,14 +10,9 @@ services:
      - db
     ports:
      - 8080:8080
-  db:
-    container_name: database
-    image: mongo
-    restart: always
-    environment:
-      MONGO_INITDB_DATABASE: jejakin
-    volumes: 
-      - mongo_data:/data/db
-volumes:
-  mongo_data:
-    external: true
+  # db:
+  #   container_name: database
+  #   image: mongo
+  #   restart: always
+  #   environment:
+  #     MONGO_INITDB_DATABASE: jejakin
