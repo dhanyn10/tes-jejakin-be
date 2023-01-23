@@ -13,6 +13,8 @@ jobs:
       run:
         working-directory: ./order
     steps:
+    - name: create docker mongo data volume
+      run:  docker volume create --name=mongo_data
     - uses: actions/checkout@v2
     - name: run docker compose
       run: docker-compose up -d
