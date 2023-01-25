@@ -8,6 +8,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
@@ -77,11 +78,12 @@ class OrderApplicationTests {
 		encoding = encoding == null ? "UTF-8" : encoding;
 		String body = IOUtils.toString(in, encoding);
 		MatcherAssert.assertThat(body, CoreMatchers.containsString("admin generated"));
+		List dataRepo = userRepo.findAll();
+		assertEquals(dataRepo.size(), 1);
 	}
 
 	@Test
 	void isertAdminTwice() throws IOException {
-		this.delaytest(3);
 		URL url = new URL(this.configHost() + "/users/admin");
 		URLConnection conn = url.openConnection();
 		InputStream in = conn.getInputStream();
@@ -92,7 +94,6 @@ class OrderApplicationTests {
 	}
 	@Test
 	void AddRegularkUsers() throws IOException, JSONException {
-		this.delaytest(3);
 		User reguler = new User();
 		Faker faker = new Faker();
 		reguler.setUsername(faker.football().teams());
