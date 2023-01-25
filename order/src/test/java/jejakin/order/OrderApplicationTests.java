@@ -8,6 +8,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -51,6 +52,15 @@ class OrderApplicationTests {
 		}
 	}
 	
+	private void delaytest (int sec) {
+		try {
+			TimeUnit.SECONDS.sleep(sec);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@Test
 	void getAllUsers() throws IOException {
 		HttpUriRequest request = new HttpGet(this.configHost() + "/users/all");
@@ -71,6 +81,7 @@ class OrderApplicationTests {
 
 	@Test
 	void isertAdminTwice() throws IOException {
+		this.delaytest(3);
 		URL url = new URL(this.configHost() + "/users/admin");
 		URLConnection conn = url.openConnection();
 		InputStream in = conn.getInputStream();
@@ -81,6 +92,7 @@ class OrderApplicationTests {
 	}
 	@Test
 	void AddRegularkUsers() throws IOException, JSONException {
+		this.delaytest(3);
 		User reguler = new User();
 		Faker faker = new Faker();
 		reguler.setUsername(faker.football().teams());
