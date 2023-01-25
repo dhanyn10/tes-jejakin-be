@@ -17,4 +17,4 @@ services:
       - MONGODB_EXTRA_FLAGS=--wiredTigerCacheSizeGB=2
       - MONGODB_DATABASE=jejakin
     volumes:
-     - mongodb:/data/db
+     - db:/data/db
