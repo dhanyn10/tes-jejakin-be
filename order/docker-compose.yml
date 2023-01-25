@@ -16,5 +16,5 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
       - MONGODB_EXTRA_FLAGS=--wiredTigerCacheSizeGB=2
       - MONGODB_DATABASE=jejakin
-    volume:
+    volumes:
      - mongodb:/data/db
