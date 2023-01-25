@@ -81,12 +81,6 @@ class OrderApplicationTests {
 	}
 
 	@Test
-	void dataNotEmpty () {
-		List<User> dataRepo = userRepo.findAll();
-		assertEquals(dataRepo.size(), 1);
-	}
-	
-	@Test
 	void isertAdminTwice() throws IOException {
 		URL url = new URL(this.configHost() + "/users/admin");
 		URLConnection conn = url.openConnection();
@@ -96,6 +90,13 @@ class OrderApplicationTests {
 		String body = IOUtils.toString(in, encoding);
 		MatcherAssert.assertThat(body, CoreMatchers.containsString("admin only generated once"));
 	}
+
+	@Test
+	void dataNotEmpty () {
+		List<User> dataRepo = userRepo.findAll();
+		assertEquals(1, dataRepo.size());
+	}
+	
 	@Test
 	void AddRegularkUsers() throws IOException, JSONException {
 		User reguler = new User();
