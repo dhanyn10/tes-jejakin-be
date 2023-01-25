@@ -18,3 +18,6 @@ services:
       - MONGODB_DATABASE=jejakin
     volumes:
      - db:/data/db
+
+volumes:
+  db:
