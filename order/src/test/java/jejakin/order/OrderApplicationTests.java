@@ -78,10 +78,14 @@ class OrderApplicationTests {
 		encoding = encoding == null ? "UTF-8" : encoding;
 		String body = IOUtils.toString(in, encoding);
 		MatcherAssert.assertThat(body, CoreMatchers.containsString("admin generated"));
-		List dataRepo = userRepo.findAll();
-		assertEquals(dataRepo.size(), 1);
 	}
 
+	@Test
+	void dataNotEmpty () {
+		List<User> dataRepo = userRepo.findAll();
+		assertEquals(dataRepo.size(), 1);
+	}
+	
 	@Test
 	void isertAdminTwice() throws IOException {
 		URL url = new URL(this.configHost() + "/users/admin");
