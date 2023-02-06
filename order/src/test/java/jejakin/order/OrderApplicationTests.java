@@ -20,8 +20,11 @@ import org.apache.hc.core5.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.shaded.org.apache.commons.io.IOUtils;
 import org.testcontainers.shaded.org.hamcrest.CoreMatchers;
 import org.testcontainers.shaded.org.hamcrest.MatcherAssert;
@@ -30,7 +33,9 @@ import jejakin.order.dao.UserRepository;
 import jejakin.order.model.User;
 import net.datafaker.Faker;
 
-@SpringBootTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@AutoConfigureDataMongo
 class OrderApplicationTests {
 	
 	@Autowired
