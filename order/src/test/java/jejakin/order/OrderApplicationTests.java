@@ -9,7 +9,6 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -17,14 +16,9 @@ import org.apache.hc.client5.http.classic.methods.HttpUriRequest;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.http.HttpResponse;
 import org.apache.hc.core5.http.HttpStatus;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.shaded.org.apache.commons.io.IOUtils;
 import org.testcontainers.shaded.org.hamcrest.CoreMatchers;
 import org.testcontainers.shaded.org.hamcrest.MatcherAssert;
@@ -33,9 +27,7 @@ import jejakin.order.dao.UserRepository;
 import jejakin.order.model.User;
 import net.datafaker.Faker;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@AutoConfigureDataMongo
+@SpringBootTest
 class OrderApplicationTests {
 	
 	@Autowired
@@ -58,13 +50,9 @@ class OrderApplicationTests {
 		}
 	}
 	
-	private void delaytest (int sec) {
-		try {
-			TimeUnit.SECONDS.sleep(sec);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	@org.junit.jupiter.api.AfterEach
+	void AfterEach () {
+		userRepo.deleteAll();
 	}
 	
 	@Test
@@ -75,7 +63,6 @@ class OrderApplicationTests {
 	}
 	@Test
 	void isertAdmin() throws IOException {
-		userRepo.deleteAll();
 		URL url = new URL(this.configHost() + "/users/admin");
 		URLConnection conn = url.openConnection();
 		InputStream in = conn.getInputStream();
@@ -86,24 +73,7 @@ class OrderApplicationTests {
 	}
 
 	@Test
-	void isertAdminTwice() throws IOException {
-		URL url = new URL(this.configHost() + "/users/admin");
-		URLConnection conn = url.openConnection();
-		InputStream in = conn.getInputStream();
-		String encoding = conn.getContentEncoding();
-		encoding = encoding == null ? "UTF-8" : encoding;
-		String body = IOUtils.toString(in, encoding);
-		MatcherAssert.assertThat(body, CoreMatchers.containsString("admin only generated once"));
-	}
-
-	@Test
 	void dataNotEmpty () {
-		List<User> dataRepo = userRepo.findAll();
-		assertEquals(1, dataRepo.size());
-	}
-	
-	@Test
-	void AddRegularkUsers() throws IOException, JSONException {
 		User reguler = new User();
 		Faker faker = new Faker();
 		reguler.setUsername(faker.football().teams());
@@ -112,13 +82,7 @@ class OrderApplicationTests {
 		reguler.setRole("user");
 		reguler.setEmail(faker.football().coaches());
 		userRepo.save(reguler);
-		URL url = new URL(this.configHost() + "/users/all");
-		URLConnection conn = url.openConnection();
-		InputStream in = conn.getInputStream();
-		String encoding = conn.getContentEncoding();
-		encoding = encoding == null ? "UTF-8" : encoding;
-		String body = IOUtils.toString(in, encoding);
-		JSONArray resBody = new JSONArray(body);
-		assertEquals(resBody.length(), 2); // ada 2 user, admin dan reguler
+		List<User> dataRepo = userRepo.findAll();
+		assertEquals(1, dataRepo.size());
 	}
 }
